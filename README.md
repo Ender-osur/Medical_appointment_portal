@@ -82,3 +82,6 @@ Users can retrieve appointments by sending a GET request to /citas with their us
 + Query Parameters:
 user_id: ID of the user requesting the appointments.
 type: Type of user (patient or doctor).
+
+
+**THIS CODE IS FREE, YOU CAN USE IT**
