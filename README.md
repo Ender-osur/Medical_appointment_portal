@@ -1,56 +1,29 @@
-# Medical_appointment_portal
-This project is an appointment scheduling web application for a healthcare entity. It features a landing page with three options: log in as a patient, log in as a doctor/admin, and register as a patient. The frontend is built with Vue.js, and the backend uses MySQL
+# Medical_appointment_portal_backend
 
-# Autenticación
-## Registro de Usuarios (Pacientes)
+## How the Backend Works
+### Overview
+This backend is built using Node.js, Express, and MySQL. It provides endpoints for user authentication and appointment management. The backend is structured to handle two types of users: patients and doctors. Patients can register, log in, and schedule appointments, while doctors can approve appointments and view all scheduled appointments.
 
-+ URL: http://localhost:5000/auth/register
-+ Método: POST
-+ Descripción: Permite a los pacientes registrarse en la plataforma.
-Cuerpo de la Solicitud (JSON):
-`JSON
-{
-  "nombre": "Nombre del Paciente",
-  "email": "paciente@example.com",
-  "password": "password123",
-  "tipo": "paciente"
-}`
-AI-generated code. Review and use carefully. More info on FAQ.
-Inicio de Sesión
-URL: http://localhost:5000/auth/login
-Método: POST
-Descripción: Permite a los usuarios (pacientes y médicos) iniciar sesión.
-Cuerpo de la Solicitud (JSON):
-```JSON
-{
-  "email": "usuario@example.com",
-  "password": "password123"
-}
-AI-generated code. Review and use carefully. More info on FAQ.
-Gestión de Citas
-Agendar Cita (Pacientes)
-URL: http://localhost:5000/citas
-Método: POST
-Descripción: Permite a los pacientes agendar una cita.
-Cuerpo de la Solicitud (JSON):
-```json
-  {
-    "paciente_id": 1,
-    "fecha": "2024-11-01",
-    "hora": "10:00:00",
-    "descripcion": "Consulta general"
-}
-
-AI-generated code. Review and use carefully. More info on FAQ.
-Aprobar Cita (Médicos)
-URL: http://localhost:5000/citas/:id/aprobar
-Método: PUT
-Descripción: Permite a los médicos aprobar una cita pendiente.
-Parámetro de URL: :id es el ID de la cita que se va a aprobar.
-Obtener Citas
-URL: http://localhost:5000/citas
-Método: GET
-Descripción: Permite a los usuarios obtener citas. Los pacientes solo pueden ver sus propias citas, mientras que los médicos pueden ver todas las citas.
-Parámetros de Consulta:
-usuario_id: ID del usuario que solicita las citas.
-tipo: Tipo de usuario (paciente o medico).
+### Key Components
+#### Database Configuration:
+The database is configured using MySQL. The database.js file initializes the database and creates the necessary tables (usuarios and citas).
+#### Routes:
+Authentication Routes (authRoutes.js): Handles user registration and login.
+Appointment Routes (citasRoutes.js): Manages appointment scheduling, approval, and retrieval.
+#### Controllers:
+Auth Controller (authController.js): Contains the logic for user registration and login.
+Citas Controller (citasController.js): Contains the logic for scheduling, approving, and retrieving appointments.
+#### Models:
+User Model (userModel.js): Interacts with the usuarios table.
+Citas Model (citasModel.js): Interacts with the citas table.
+### Workflow
+User Registration:
+Patients can register by sending a POST request to /auth/register with their details. The backend validates the data and creates a new user in the usuarios table.
+#### User Login:
+Users (patients and doctors) can log in by sending a POST request to /auth/login with their email and password. The backend verifies the credentials and returns the user data if valid.
+#### Scheduling Appointments:
+Patients can schedule appointments by sending a POST request to /citas with the appointment details. The backend saves the appointment in the citas table with a status of “pending”.
+#### Approving Appointments:
+Doctors can approve appointments by sending a PUT request to /citas/:id/aprobar with the appointment ID. The backend updates the appointment status to “approved”.
+#### Retrieving Appointments:
+Users can retrieve appointments by sending a GET request to /citas with their user ID and type (patient or doctor). Patients can only see their own appointments, while doctors can see all appointments.
