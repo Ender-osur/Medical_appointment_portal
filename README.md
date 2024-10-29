@@ -1,4 +1,5 @@
 # Medical_appointment_portal_backend
+# Theory
 
 ## How the Backend Works
 ### Overview
@@ -27,3 +28,57 @@ Patients can schedule appointments by sending a POST request to /citas with the 
 Doctors can approve appointments by sending a PUT request to /citas/:id/aprobar with the appointment ID. The backend updates the appointment status to “approved”.
 #### Retrieving Appointments:
 Users can retrieve appointments by sending a GET request to /citas with their user ID and type (patient or doctor). Patients can only see their own appointments, while doctors can see all appointments.
+
+# Practice
+## About requests and how they are handled:
+
+## Authentication
+### User (Patient) Registration
+
++ URL: http://localhost:5000/auth/register
++ Method: POST
++ Description: Allows patients to register on the platform.
++ Request Body (JSON):
++JSON
+`{
+"name": "Patient Name",
+"email": "patient@example.com",
+"password": "password123",
+"type": "patient"
+}`
+
+### Login
++ URL: http://localhost:5000/auth/login
++ Method: POST
++ Description: Allows users (patients and doctors) to log in.
++ Request Body (JSON):
++ JSON
+`{
+"email": "user@example.com",
+"password": "password123"
+}`
+## Appointment Management
+### Schedule Appointment (Patients)
++ URL: http://localhost:5000/appointments
++ Method: POST
++ Description: Allows patients to schedule an appointment.
++ Request Body (JSON):
++ JSON
+`{
+"patient_id": 1,
+"date": "2024-11-01",
+"time": "10:00:00",
+"description": "General consultation"
+}`
+### Approve Appointment (Doctors)
++ URL: http://localhost:5000/appointments/:id/approve
++ Method: PUT
++ Description: Allows doctors to approve a pending appointment.
++ URL Parameter: :id is the ID of the appointment to be approved.
+### Get Appointments
++ URL: http://localhost:5000/appointments
++ Method: GET
++ Description: Allows users to get appointments. Patients can only see their own appointments, while doctors can see all appointments.
++ Query Parameters:
+user_id: ID of the user requesting the appointments.
+type: Type of user (patient or doctor).
